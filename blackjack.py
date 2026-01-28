@@ -39,7 +39,7 @@ def display_hand(hand,hide_first_card=False):
     rand = ""
     for i,card in enumerate(hand):
         if i == 0 and hide_first_card:
-            rand += get_card_html(card,hidden=True)
+            rand += get_card_html(card,hidden=True)                 #displaying hand as card thingy
         else:
             rand += get_card_html(card)
     st.markdown(f'<div style="display:flex; gap:10px;">{rand}</div>',unsafe_allow_html=True)
