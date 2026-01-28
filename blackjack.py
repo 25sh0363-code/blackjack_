@@ -17,8 +17,8 @@ def deal_card():
 def get_card_html(card,hidden=False):
     if hidden:
         return"""
-        <div style="border:10px white solid; border-radius:10px; width:80px; height:120px; background-color:black; display:flex; justify-content:center; align-items:center;">
-            <div style="color:white; font-weight:bold;">?</div>
+        <div style="border:10px white solid; border-radius:5px; width:80px; height:120px; background-color:black; display:flex; justify-content:center; align-items:center;">
+            <div style="color:white; font-weight:bold; font-size:24px;">🂠</div>
         </div>
         """
     rank = card[0]
