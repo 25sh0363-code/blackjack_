@@ -51,6 +51,7 @@ with col1:
     player_score = calculate_hand_value(st.session_state.player_hand)
     st.metric("your score🙈",player_score)
 
+
 with col2:
     st.header("dealer's hand🤚")
     if st.session_state.gameover:
