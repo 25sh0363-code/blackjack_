@@ -18,7 +18,7 @@ def get_card_html(card,hidden=False):
     if hidden:
         return"""
         <div style="border:5px white solid; border-radius:10px; width:80px; height:120px; background-color:maroon; display:flex; justify-content:center; align-items:center;">
-            
+            <div style="color:white; font-weight:bold; font-size:24px;"></div>
         </div>
         """
     rank = card[0]
