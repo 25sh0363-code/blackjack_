@@ -84,6 +84,11 @@ with col1:
     display_hand(st.session_state.player_hand)
     player_score = calculate_hand_value(st.session_state.player_hand)
     st.metric("your score🙈",player_score)
+    if player_score == 21:
+        st.session_state.result = "blackjack! you win!🥳"
+        st.session_state.gameover = True
+        reset_game()
+        st.rerun()
 
 
 with col2:
