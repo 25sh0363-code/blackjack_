@@ -93,7 +93,7 @@ with col2:
         dealer_score = calculate_hand_value(st.session_state.dealer_hand)
         st.metric("dealer score🙉",dealer_score)
     else:
-        st.write("cards: "+st.session_state.dealer_hand[0]+", ?")
+        display_hand(st.session_state.dealer_hand,hide_first_card=True)
         dealer_score = calculate_hand_value([st.session_state.dealer_hand[1]])
         st.metric("dealer score🙉",dealer_score)
 
