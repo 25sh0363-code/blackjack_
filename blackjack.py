@@ -23,7 +23,7 @@ def get_card_html(card,hidden=False):
         """
     rank = card[0]
 
-    if card[1] in ["❤️","♦️"]:                          #get card html for visual html representation of cards
+    if card[1] in ["❤️","♦️"]:
         color = "red"
     else:
         color = "black"
@@ -39,10 +39,10 @@ def display_hand(hand,hide_first_card=False):
     rand = ""
     for i,card in enumerate(hand):
         if i == 0 and hide_first_card:
-            rand += get_card_html(card,hidden=True)                 #displaying hand as card thingy
+            rand += get_card_html(card,hidden=True)
         else:
             rand += get_card_html(card)
-    st.markdown(f'<div style="display:flex; gap:10px;">{rand}</div>',unsafe_allow_html=True)
+    st.markdown(rand,unsafe_allow_html=True)
     
 
 
@@ -93,7 +93,7 @@ with col2:
         dealer_score = calculate_hand_value(st.session_state.dealer_hand)
         st.metric("dealer score🙉",dealer_score)
     else:
-        display_hand(st.session_state.dealer_hand, hide_first_card=True)
+        st.write("cards: "+st.session_state.dealer_hand[0]+", ?")
         dealer_score = calculate_hand_value([st.session_state.dealer_hand[1]])
         st.metric("dealer score🙉",dealer_score)
 
