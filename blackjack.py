@@ -7,23 +7,57 @@ import random
 
 
 all_possible_cards = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K']
+suits = ["❤️","♦️","♣️","♠️"]
 
 
         
 def deal_card():
-    return random.choice(all_possible_cards)   #simple deal card function nothing special
+    return (random.choice(all_possible_cards), random.choice(suits))   #simple deal card function nothing special
+
+def get_card_html(card,hidden=False):
+    if hidden:
+        return"""
+        <div style="border:1px solid black; border-radius:10px; width:80px; height:120px; background-color:gray; display:flex; justify-content:center; align-items:center;">
+            <div style="color:white; font-weight:bold;">?</div>
+        </div>
+        """
+    rank = card[0]
+
+    if card[1] in ["❤️","♦️"]:
+        color = "red"
+    else:
+        color = "black"
+    
+    return f"""
+    <div style="border:1px solid black; border-radius:10px; width:80px; height:120px; display:flex; flex-direction:column; justify-content:space-between; padding:5px; background-color:white;">
+        <div style="color:{color}; font-weight:bold;">{rank}{card[1]}</div>
+        <div style="color:{color}; font-weight:bold; transform:rotate(180deg);">{rank}{card[1]}</div>
+    </div>
+    """
+
+def display_hand(hand,hide_first_card=False):
+    rand = ""
+    for i,card in enumerate(hand):
+        if i == 0 and hide_first_card:
+            rand += get_card_html(card,hidden=True)
+        else:
+            rand += get_card_html(card)
+    st.markdown(rand,unsafe_allow_html=True)
+    
+
 
 def calculate_hand_value(hand):
     value = 0
     aces = 0
     for card in hand:
-        if card in ['J', 'Q', 'K']:
+        rank = card[0]
+        if rank in ['J', 'Q', 'K']:
             value += 10
-        elif card == 'A':
+        elif rank == 'A':
             aces += 1
             value += 11                    #calculate hand function i learnt in kaggle
         else:
-            value += int(card)
+            value += int(rank)
     while value > 21 and aces:
         value -= 10
         aces -= 1
@@ -47,7 +81,7 @@ col1, col2 = st.columns(2)
 
 with col1:
     st.subheader("your hand🖐️")
-    st.write("cards: "+",".join(st.session_state.player_hand))               #playerside column
+    display_hand(st.session_state.player_hand)
     player_score = calculate_hand_value(st.session_state.player_hand)
     st.metric("your score🙈",player_score)
 
@@ -55,11 +89,11 @@ with col1:
 with col2:
     st.header("dealer's hand🤚")
     if st.session_state.gameover:
-        st.write("cards: "+",".join(st.session_state.dealer_hand))                  #dealer side column
+        display_hand(st.session_state.dealer_hand)
         dealer_score = calculate_hand_value(st.session_state.dealer_hand)
         st.metric("dealer score🙉",dealer_score)
     else:
-        st.write("cards: "+st.session_state.dealer_hand[0]+", ?")
+        display_hand(st.session_state.dealer_hand, hide_first_card=True)
         dealer_score = calculate_hand_value([st.session_state.dealer_hand[0]])
         st.metric("dealer score🙉",dealer_score)
 
